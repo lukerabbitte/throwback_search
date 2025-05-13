@@ -14,13 +14,13 @@ export const POST = async ({ request }) => {
 		const body = await request.json();
 		const { query } = body;
 
-		console.log('🔍 Processing query:', query);
+		//console.log('🔍 Processing query:', query);
 
 		if (!query || !query.trim()) {
 			return json({ error: 'Query is required' }, { status: 400 });
 		}
 
-		console.log('🧠 Generating embedding from OpenAI...');
+		//console.log('🧠 Generating embedding from OpenAI...');
 		// Generate embedding from query
 		const result = await openai.embeddings.create({
 			input: query,
