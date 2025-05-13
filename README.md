@@ -27,3 +27,9 @@ Needless to say, accurate and plentiful data that can be easily adapted to this 
 Interesting further reading, discussing a cool use case of AI in helping to surface good fodder for social media from a comprehensive yet unstructured archive, is the following:
 
 https://www.nature.com/articles/s41598-024-80378-2
+
+## Credit
+
+https://cookbook.openai.com/examples/vector_databases/supabase/semantic-search
+
+This documentation, although from 2023, was very helpful.
