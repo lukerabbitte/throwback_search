@@ -2,7 +2,7 @@
 
 https://throwbacktractor.netlify.app
 
-^ Try typing in a description of the type of cultural item you are looking for, like "Irish sporting triumph of the 90s", or "occasions in which Irish artists faced backclash for political views".
+TLDR: Try typing in a description of the type of cultural item you are looking for, like "Irish sporting triumph of the 90s", or "occasions in which Irish artists faced backclash for political views". We're working with a pretty tiny toy dataset for this example but you still should see up to ten results ranked by cosine similarity of their vector embeddings using OpenAI's `text-embedding-3-small`.
 
 This is a simple prototype of a social media assistant tool built using SvelteKit, ShadCN Svelte, Tailwind, Supabase, PostgreSQL Vector Search, and OpenAI embeddings API.
 
