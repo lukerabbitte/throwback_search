@@ -1,11 +1,12 @@
 <script>
-	import { fly, fade, crossfade } from 'svelte/transition';
+	import { fly, fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { Loader2 } from 'lucide-svelte';
 	import ResultCard from '$lib/components/ResultCard.svelte';
 	import ResultCardSkeleton from '$lib/components/skeletons/ResultCardSkeleton.svelte';
+	import { toast } from 'svelte-sonner';
 
 	let searchTerm = '';
 	let isLoading = false;
@@ -17,27 +18,54 @@
 	const handleSubmit = async () => {
 		if (!searchTerm.trim()) return;
 
+		//console.log('🔍 Search initiated with query:', searchTerm);
 		isLoading = true;
-		// Note: We're not clearing searchResults here so we know how many skeleton cards to show
+
+		// Note: We don't clear searchResults just yet so we know how many skeleton cards to show
 
 		try {
-			// Simulate API call with timeout
-			await new Promise((resolve) => setTimeout(resolve, 1240));
+			//console.log('📤 Sending request to /api/search endpoint...');
+			// Call our semantic search API
+			const response = await fetch('/api/search', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ query: searchTerm })
+			});
 
-			// Mock results - replace with actual API call
-			const newResults = Array(10)
-				.fill()
-				.map((_, i) => ({
-					id: i + 1,
-					title: `Event ${i + 1} related to "${searchTerm}"`,
-					date: new Date(2020 + i, i % 12, (i % 28) + 1).toLocaleDateString(),
-					description: `This is a sample event description for "${searchTerm}". More details would appear here.`
-				}));
+			//console.log('📥 Received response with status:', response.status);
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.error || 'Failed to search');
+			}
+
+			const data = await response.json();
+			//console.log('✅ API returned data:', data);
+			//console.log(`📊 Found ${data.moments?.length || 0} results`);
+
+			// Transform moments to match the expected format
+			const newResults = data.moments.map((moment) => ({
+				id: moment.id,
+				title: moment.title,
+				date: new Date(moment.date).toLocaleDateString(),
+				description: moment.description,
+				link: moment.link,
+				category: moment.category
+			}));
 
 			searchResults = newResults;
 			hasSearchedBefore = true;
 		} catch (error) {
 			console.error('Error fetching results:', error);
+			toast.error('Search failed', {
+				description: error.message || 'Something went wrong'
+			});
+			// If search fails, keep the previous results if any
+			if (!searchResults.length) {
+				searchResults = [];
+			}
 		} finally {
 			isLoading = false;
 		}
@@ -69,7 +97,7 @@
 						bind:value={searchTerm}
 						placeholder={searchPlaceholder}
 						autocomplete="off"
-                        on:keydown={handleKeydownInTextArea}
+						on:keydown={handleKeydownInTextArea}
 					/>
 
 					<Button
