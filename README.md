@@ -32,4 +32,4 @@ https://www.nature.com/articles/s41598-024-80378-2
 
 https://cookbook.openai.com/examples/vector_databases/supabase/semantic-search
 
-This documentation, although from 2023, was very helpful.
+This documentation, although from late 2023, was very helpful.
