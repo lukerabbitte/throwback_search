@@ -12,8 +12,7 @@
 	let isLoading = false;
 	let searchResults = [];
 	let hasSearchedBefore = false;
-	let searchPlaceholder =
-		'Were there any huge musical events in Dublin happening around 10 years ago?';
+	let searchPlaceholder = `E.g. "Huge Irish sporting achievement of the 90's"`;
 
 	const handleSubmit = async () => {
 		if (!searchTerm.trim()) return;
@@ -124,18 +123,41 @@
 				</div>
 			</div>
 		{:else if isLoading && hasSearchedBefore}
-			<h2 class="mb-4 text-xl font-semibold text-zinc-300">Top Results</h2>
 			<div class="grid grid-cols-1 gap-4 pb-4 md:grid-cols-2 lg:grid-cols-3">
 				{#each Array(searchResults.length) as _, i (i)}
 					<ResultCardSkeleton />
 				{/each}
 			</div>
 		{:else if searchResults.length > 0}
-			<h2 class="mb-4 text-xl font-semibold text-zinc-300">Top Results</h2>
 			<div class="grid grid-cols-1 gap-4 pb-4 md:grid-cols-2 lg:grid-cols-3">
 				{#each searchResults as searchResult (searchResult.id)}
 					<ResultCard result={searchResult} />
 				{/each}
+			</div>
+		{:else if hasSearchedBefore && searchResults.length === 0}
+			<div
+				class="flex flex-col items-center justify-center py-16 text-center"
+				transition:fade={{ duration: 200 }}
+			>
+				<div class="mb-4 rounded-full bg-zinc-800 p-4">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="text-zinc-400"><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /></svg
+					>
+				</div>
+				<h3 class="mb-2 text-xl font-medium text-zinc-300">No results found</h3>
+				<p class="max-w-md text-zinc-400">
+					We couldn't find any events matching your search. Try using different keywords or a more
+					general search term.
+				</p>
 			</div>
 		{/if}
 	</div>
