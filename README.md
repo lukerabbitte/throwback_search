@@ -2,6 +2,8 @@
 
 https://throwbacktractor.netlify.app
 
+^ Try typing in a description of the type of cultural item you are looking for, like "Irish sporting triumph of the 90s", or "occasions in which Irish artists faced backclash for political views".
+
 This is a simple prototype of a social media assistant tool built using SvelteKit, ShadCN Svelte, Tailwind, Supabase, PostgreSQL Vector Search, and OpenAI embeddings API.
 
 It is designed to reference a PostgreSQL table of the schema (title, date, description, link, category) representing user-supplied cultural and historical moments with the intention to make it easy to surface highly relevant cultural and historical events for a creator wishing to ground their posts by referencing related touchstones from the past.
