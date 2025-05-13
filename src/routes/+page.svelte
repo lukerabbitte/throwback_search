@@ -1,34 +1,15 @@
 <script>
-	import { fly, fade } from 'svelte/transition';
+	import { fly, fade, crossfade } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
+	import { Textarea } from '$lib/components/ui/textarea';
 	import { Loader2 } from 'lucide-svelte';
 
 	let searchTerm = '';
 	let isLoading = false;
 	let searchResults = [];
-	let placeholderIndex = 0;
-	let placeholderInterval;
-	let searchPlaceholder = '';
-
-	const placeholders = [
-		'What kind of event are you thinking of?',
-		'Searching for a concert from 2015?',
-		'Remember that festival you loved?',
-		'Looking for that sporting event?'
-	];
-
-	onMount(() => {
-		updatePlaceholder();
-		placeholderInterval = setInterval(updatePlaceholder, 3000);
-		return () => clearInterval(placeholderInterval);
-	});
-
-	const updatePlaceholder = () => {
-		placeholderIndex = (placeholderIndex + 1) % placeholders.length;
-		searchPlaceholder = placeholders[placeholderIndex];
-	};
+	let searchPlaceholder =
+		'Were there any huge musical events in Dublin happening around 10 years ago?';
 
 	const handleSubmit = async () => {
 		if (!searchTerm.trim()) return;
@@ -57,20 +38,29 @@
 	};
 </script>
 
-<div class="flex h-screen flex-col items-center justify-center bg-slate-50 p-4">
+<div
+	class="flex h-screen flex-col items-center justify-center gap-4 overflow-y-scroll bg-zinc-950 p-4"
+>
+	<div class="mx-auto h-32 w-32 overflow-hidden rounded-md">
+		<enhanced:img
+			src="$lib/assets/tractor.png"
+			alt="Throwback search tractor logo"
+			fetchpriority="high"
+		/>
+	</div>
 	<div class="mx-auto w-full max-w-3xl">
 		<form on:submit|preventDefault={handleSubmit} class="mb-8">
-			<div class="flex gap-4 bg-slate-300 p-4 rounded-md">
-				<Input
-					type="text"
-					class="w-full rounded-md border-none bg-slate-50 py-6 text-lg text-slate-900"
+			<div class="flex flex-col gap-4 rounded-md bg-zinc-900 p-4">
+				<Textarea
+					class="text-md ring-offset-none min-h-32 w-full resize-none rounded-md border-none bg-zinc-800 py-4 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-zinc-700"
 					bind:value={searchTerm}
-					placeholder={searchPlaceholder}
+					placeholder="Were there any huge musical events in Dublin happening around 10 years ago?"
 					autocomplete="off"
 				/>
+
 				<Button
 					type="submit"
-					class="rounded-md bg-slate-200 py-6 text-slate-900 transition duration-150 ease-out hover:scale-105 hover:opacity-90"
+					class="mx-auto max-w-32 rounded-md bg-slate-200 py-6 text-slate-900 transition duration-150 ease-out hover:scale-105 hover:opacity-90"
 					disabled={isLoading}
 				>
 					{#if isLoading}
@@ -85,22 +75,22 @@
 		{#if isLoading}
 			<div class="flex justify-center py-12" transition:fade>
 				<div class="flex flex-col items-center gap-4">
-					<Loader2 class="text-primary h-12 w-12 animate-spin" />
-					<p class="text-lg">Finding your events...</p>
+					<Loader2 class="h-12 w-12 animate-spin text-zinc-400" />
+					<p class="text-lg text-zinc-300">Finding your events...</p>
 				</div>
 			</div>
 		{:else if searchResults.length > 0}
 			<div transition:fade={{ duration: 300 }}>
-				<h2 class="mb-4 text-xl font-semibold">Top Results</h2>
+				<h2 class="mb-4 text-xl font-semibold text-zinc-300">Top Results</h2>
 				<div class="grid grid-cols-1 gap-4 overflow-x-auto pb-4 md:grid-cols-2 lg:grid-cols-3">
 					{#each searchResults as result (result.id)}
 						<div
-							class="rounded-lg border p-4 shadow-sm transition-shadow hover:shadow-md"
+							class="rounded-lg border border-zinc-800 bg-zinc-900 p-4 shadow-sm transition-shadow hover:shadow-md"
 							transition:fly={{ y: 20, duration: 300, delay: result.id * 50 }}
 						>
-							<h3 class="font-bold">{result.title}</h3>
-							<p class="text-muted-foreground text-sm">{result.date}</p>
-							<p class="mt-2 text-sm">{result.description}</p>
+							<h3 class="font-bold text-zinc-300">{result.title}</h3>
+							<p class="text-sm text-zinc-500">{result.date}</p>
+							<p class="mt-2 text-sm text-zinc-400">{result.description}</p>
 						</div>
 					{/each}
 				</div>
