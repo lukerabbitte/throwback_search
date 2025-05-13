@@ -42,6 +42,14 @@
 			isLoading = false;
 		}
 	};
+
+	const handleKeydownInTextArea = (event) => {
+		// Check for Ctrl+Enter (or Cmd+Enter on Mac)
+		if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+			event.preventDefault(); // Prevent default behavior
+			handleSubmit();
+		}
+	};
 </script>
 
 <div class="min-h-screen bg-zinc-950 p-4">
@@ -61,6 +69,7 @@
 						bind:value={searchTerm}
 						placeholder={searchPlaceholder}
 						autocomplete="off"
+                        on:keydown={handleKeydownInTextArea}
 					/>
 
 					<Button
