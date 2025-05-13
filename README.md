@@ -11,3 +11,7 @@ When a user submits a natural language description, we generate an embedding of 
 A future improvement could be building out a calendar interface showing relevant upcoming anniversaries for posts of the "on this day in..." variety.
 
 Needless to say, accurate and plentiful data that can be easily adapted to this schema is a prerequisite for a good experience with this project! Also make sure to bring Supabase and OpenAI keys as well as a Supabase PostgreSQL table of the correct schema (I called my table "moment").
+
+Interesting further reading, discussing a cool use case of AI in helping to surface good fodder for social media from a comprehensive yet unstructured archive, is the following:
+
+https://www.nature.com/articles/s41598-024-80378-2
