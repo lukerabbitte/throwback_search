@@ -4,6 +4,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { Loader2 } from 'lucide-svelte';
+	import ResultCard from '$lib/components/ResultCard.svelte';
 
 	let searchTerm = '';
 	let isLoading = false;
