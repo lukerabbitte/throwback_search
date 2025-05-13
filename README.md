@@ -1,6 +1,6 @@
 # Throwback Tractor
 
-[https://throwbacktractor.netlify.app]
+()[https://throwbacktractor.netlify.app]
 
 This is a simple prototype of a social media assistant tool built using SvelteKit, ShadCN Svelte, Tailwind, Supabase, PostgreSQL Vector Search, and OpenAI embeddings API.
 
@@ -16,4 +16,4 @@ Needless to say, accurate and plentiful data that can be easily adapted to this 
 
 Interesting further reading, discussing a cool use case of AI in helping to surface good fodder for social media from a comprehensive yet unstructured archive, is the following:
 
-[https://www.nature.com/articles/s41598-024-80378-2]
+()[https://www.nature.com/articles/s41598-024-80378-2]
